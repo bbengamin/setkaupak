@@ -894,6 +894,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['quantity'] = 1;
 		}
+		
+		if (isset($this->request->post['pack_quantity'])) {
+			$data['pack_quantity'] = $this->request->post['pack_quantity'];
+		} elseif (!empty($product_info)) {
+			$data['pack_quantity'] = $product_info['pack_quantity'];
+		} else {
+			$data['pack_quantity'] = 1;
+		}
 
 		if (isset($this->request->post['minimum'])) {
 			$data['minimum'] = $this->request->post['minimum'];

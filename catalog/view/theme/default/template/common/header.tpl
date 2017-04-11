@@ -22,10 +22,12 @@
 <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
-<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+<link rel="icon" href="/image/catalog/favicon.ico">
 <?php foreach ($styles as $style) { ?>
 <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
+<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
@@ -38,38 +40,27 @@
 <?php } ?>
 </head>
 <body class="<?php echo $class; ?>">
-<nav id="top">
-  <div class="container">
-    <?php echo $currency; ?>
-    <?php echo $language; ?>
-    <div id="top-links" class="nav pull-right">
-      <ul class="list-inline">
-        <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
-        <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span></a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <?php if ($logged) { ?>
-            <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
-            <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
-            <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
-            <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
-            <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-            <?php } else { ?>
-            <li><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
-            <li><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-            <?php } ?>
-          </ul>
-        </li>
-        <li><a href="<?php echo $wishlist; ?>" id="wishlist-total" title="<?php echo $text_wishlist; ?>"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a></li>
-        <li><a href="<?php echo $shopping_cart; ?>" title="<?php echo $text_shopping_cart; ?>"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a></li>
-        <li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></li>
+  <div id="page-preloader"><span class="spinner"></span></div>
+  <div id="mob-overlay" onclick="closeNav()"></div>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="material-icons">close</i></a>
+    <ul class="main-menu-box list-unstyled nav-links-scroll">
+        <li><a onclick="closeNav()" href='#our-products'>Наша продукция</a></li>
+        <li><a onclick="closeNav()" href='#specials'>Акции</a></li>
+        <li><a onclick="closeNav()" href='#sertificates'>Сертификаты</a></li>
+        <li><a onclick="closeNav()" href='#delivery'>Доставка по РФ</a></li>
+        <li><a onclick="closeNav()" href='#warranties'>Гарантии</a></li>
+        <li><a onclick="closeNav()" href='#reviews'>Отзывы клиентов</a></li>
+        <li><a onclick="closeNav()" href='#contacts'>Контактная информация</a></li>
       </ul>
-    </div>
   </div>
-</nav>
-<header>
+  <div onclick="openNav()" class="open-mob-side-nav">
+    <i class="material-icons">menu</i>
+  </div>
+<header id='home'>
   <div class="container">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-2 head-info-item head-info-item-logo">
         <div id="logo">
           <?php if ($logo) { ?>
           <a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" class="img-responsive" /></a>
@@ -78,41 +69,37 @@
           <?php } ?>
         </div>
       </div>
-      <div class="col-sm-5"><?php echo $search; ?>
+      <div class="col-sm-4 head-info-item head-info-item-phone">
+        <a href='tel:+74955653848'><?php echo $telephone; ?></a>
+        <a href='mailto:<?php echo $config_email; ?>' class='mail-heade'><?php echo $config_email; ?></a>
+        <span><?php echo $config_address; ?></span>
+        
       </div>
-      <div class="col-sm-3"><?php echo $cart; ?></div>
+      <div class="col-sm-4 head-info-item head-info-item-worktime">
+         <span><?php echo $config_comment; ?></span>
+        <span><?php echo $config_open; ?></span>
+        <a href='#' data-toggle="modal" data-target="#myModal-callback">Заказать бесплатный звонок</a>
+      </div>
+      <div class="col-sm-2 head-info-item head-info-item-cart-box">
+        <?php echo $cart; ?>
+      </div>
     </div>
   </div>
 </header>
-<?php if ($categories) { ?>
-<div class="container">
-  <nav id="menu" class="navbar">
-    <div class="navbar-header"><span id="category" class="visible-xs"><?php echo $text_category; ?></span>
-      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav">
-        <?php foreach ($categories as $category) { ?>
-        <?php if ($category['children']) { ?>
-        <li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
-          <div class="dropdown-menu">
-            <div class="dropdown-inner">
-              <?php foreach (array_chunk($category['children'], ceil(count($category['children']) / $category['column'])) as $children) { ?>
-              <ul class="list-unstyled">
-                <?php foreach ($children as $child) { ?>
-                <li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
-                <?php } ?>
-              </ul>
-              <?php } ?>
-            </div>
-            <a href="<?php echo $category['href']; ?>" class="see-all"><?php echo $text_all; ?> <?php echo $category['name']; ?></a> </div>
-        </li>
-        <?php } else { ?>
-        <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-        <?php } ?>
-        <?php } ?>
+
+<div class="main-menu-box">
+  <div class="container">
+    <div class="row">
+      <ul class="main-menu-box list-unstyled nav-links-scroll">
+        <li><a href='#our-products'>Наша продукция</a></li>
+        <li><a href='#specials'>Акции</a></li>
+        <li><a href='#sertificates'>Сертификаты</a></li>
+        <li><a href='#delivery'>Доставка по РФ</a></li>
+        <li><a href='#warranties'>Гарантии</a></li>
+        <li><a href='#reviews'>Отзывы клиентов</a></li>
+        <li><a href='#contacts'>Контактная информация</a></li>
       </ul>
     </div>
-  </nav>
+  </div>
 </div>
-<?php } ?>
+

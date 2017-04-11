@@ -19,10 +19,10 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$server = $this->config->get('config_url');
 		}
-
+/*
 		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
-		}
+		}*/
 
 		$data['title'] = $this->document->getTitle();
 
@@ -84,6 +84,10 @@ class ControllerCommonHeader extends Controller {
 		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['telephone'] = $this->config->get('config_telephone');
+		$data['config_open'] = $this->config->get('config_open');
+		$data['config_address'] = $this->config->get('config_address');
+		$data['config_comment'] = $this->config->get('config_comment');
+		$data['config_email'] = $this->config->get('config_email');
 
 		$status = true;
 
@@ -103,39 +107,6 @@ class ControllerCommonHeader extends Controller {
 		$this->load->model('catalog/category');
 
 		$this->load->model('catalog/product');
-
-		$data['categories'] = array();
-
-		$categories = $this->model_catalog_category->getCategories(0);
-
-		foreach ($categories as $category) {
-			if ($category['top']) {
-				// Level 2
-				$children_data = array();
-
-				$children = $this->model_catalog_category->getCategories($category['category_id']);
-
-				foreach ($children as $child) {
-					$filter_data = array(
-						'filter_category_id'  => $child['category_id'],
-						'filter_sub_category' => true
-					);
-
-					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
-					);
-				}
-
-				// Level 1
-				$data['categories'][] = array(
-					'name'     => $category['name'],
-					'children' => $children_data,
-					'column'   => $category['column'] ? $category['column'] : 1,
-					'href'     => $this->url->link('product/category', 'path=' . $category['category_id'])
-				);
-			}
-		}
 
 		$data['language'] = $this->load->controller('common/language');
 		$data['currency'] = $this->load->controller('common/currency');

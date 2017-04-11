@@ -22,7 +22,10 @@ $('#button-confirm').on('click', function() {
 			$('#button-confirm').button('reset');
 		},
 		success: function() {
-			location = '<?php echo $continue; ?>';
+			$('#myModal-checkout').modal('hide');
+			$('#myModal-thsnks').modal('show');
+			$('#checkout-form')[0].reset();
+		//	location = '<?php echo $continue; ?>';
 		}
 	});
 });
